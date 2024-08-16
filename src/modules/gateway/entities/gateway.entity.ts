@@ -6,7 +6,7 @@ export type GatewayDocument = HydratedDocument<Gateway>;
 
 @Schema()
 export class Gateway {
-    @Prop({ type: Types.ObjectId })
+    @Prop()
     serial: string;
 
     @Prop()
