@@ -1,11 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { CreateGatewayDto } from './dto/create-gateway.dto';
 import { UpdateGatewayDto } from './dto/update-gateway.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Gateway } from './entities/gateway.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class GatewayService {
-  create(createGatewayDto: CreateGatewayDto) {
-    return 'This action adds a new gateway';
+  constructor(@InjectModel(Gateway.name) private gateway: Model<Gateway>) { }
+
+  create(payload: CreateGatewayDto) {
+    let record = new this.gateway(payload);
+    return record.save();
   }
 
   findAll() {

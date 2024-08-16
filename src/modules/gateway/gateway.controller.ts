@@ -1,15 +1,22 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
 import { GatewayService } from './gateway.service';
 import { CreateGatewayDto } from './dto/create-gateway.dto';
 import { UpdateGatewayDto } from './dto/update-gateway.dto';
+import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { GatewayResponse } from './dto/gateway.response';
 
-@Controller('gateway')
+@Controller('gateways')
+@ApiTags('Gateway')
 export class GatewayController {
-  constructor(private readonly gatewayService: GatewayService) {}
+  constructor(private readonly gatewayService: GatewayService) { }
 
   @Post()
-  create(@Body() createGatewayDto: CreateGatewayDto) {
-    return this.gatewayService.create(createGatewayDto);
+  @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Create gateway' })
+  @ApiOkResponse({ type: GatewayResponse, description: 'Created gateway' })
+  @ApiBadRequestResponse({ description: 'Validation error' })
+  create(@Body() payload: CreateGatewayDto) {
+    return this.gatewayService.create(payload);
   }
 
   @Get()
