@@ -1,11 +1,11 @@
+import { BaseEntity } from '@lib/classes/entity.base';
 import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
-import { Types } from 'mongoose';
 
 export type GatewayDocument = HydratedDocument<Gateway>;
 
 @Schema()
-export class Gateway {
+export class Gateway extends BaseEntity {
     @Prop()
     serial: string;
 
