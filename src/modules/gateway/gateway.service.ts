@@ -37,11 +37,9 @@ export class GatewayService {
     return record;
   }
 
-  update(id: number, updateGatewayDto: UpdateGatewayDto) {
-    return `This action updates a #${id} gateway`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} gateway`;
+  async remove(serial: string) {
+    const record = await this.gateway.findOne({ serial }).exec();
+    if(!record) throw new NotFoundException();
+    await record.deleteOne();
   }
 }
