@@ -1,8 +1,23 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
+import { ServerConfiguration } from './config/server.config';
+import { useContainer } from 'class-validator';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-  await app.listen(3000);
+
+  // get config module
+  const { PORT, APP_NAME, NODE_ENV } = app.get(ConfigService).get<ServerConfiguration>('server');
+
+  // set container
+  useContainer(app.select(AppModule), { fallbackOnErrors: true });
+
+  await app.listen(PORT);
+
+  Logger.log(`Application: ${APP_NAME}`, 'Application');
+  Logger.log(`Environment: ${NODE_ENV}`, 'Application');
+  Logger.log(`Server running on port ${PORT}`, 'Application');
 }
 bootstrap();
