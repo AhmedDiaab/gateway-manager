@@ -10,8 +10,7 @@ export class GatewayService {
   constructor(@InjectModel(Gateway.name) private gateway: Model<Gateway>) { }
 
   create(payload: CreateGatewayDto) {
-    let record = new this.gateway(payload);
-    return record.save();
+    return this.gateway.create(payload)
   }
 
   findAll() {
