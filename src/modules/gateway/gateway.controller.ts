@@ -1,9 +1,10 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, Query } from '@nestjs/common';
 import { GatewayService } from './gateway.service';
 import { CreateGatewayDto } from './dto/create-gateway.dto';
 import { UpdateGatewayDto } from './dto/update-gateway.dto';
-import { ApiBadRequestResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { GatewayResponse } from './dto/gateway.response';
+import { Paginatable } from '@lib/classes/paginatable.base';
 
 @Controller('gateways')
 @ApiTags('Gateway')
@@ -13,15 +14,18 @@ export class GatewayController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Create gateway' })
-  @ApiOkResponse({ type: GatewayResponse, description: 'Created gateway' })
+  @ApiCreatedResponse({ type: GatewayResponse, description: 'Created gateway' })
   @ApiBadRequestResponse({ description: 'Validation error' })
   create(@Body() payload: CreateGatewayDto) {
     return this.gatewayService.create(payload);
   }
 
   @Get()
-  findAll() {
-    return this.gatewayService.findAll();
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'List created gateway' })
+  @ApiOkResponse({ type: GatewayResponse, description: 'Created gateway' })
+  findAll(@Query() filter: Paginatable) {
+    return this.gatewayService.findAll(filter);
   }
 
   @Get(':id')

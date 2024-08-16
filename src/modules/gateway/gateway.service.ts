@@ -4,6 +4,7 @@ import { UpdateGatewayDto } from './dto/update-gateway.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Gateway } from './entities/gateway.entity';
 import { Model } from 'mongoose';
+import { Paginatable } from '@lib/classes/paginatable.base';
 
 @Injectable()
 export class GatewayService {
@@ -13,8 +14,21 @@ export class GatewayService {
     return this.gateway.create(payload)
   }
 
-  findAll() {
-    return `This action returns all gateway`;
+  async findAll(filter: Paginatable) {
+    const { items, page } = filter;
+    const skip = (page - 1) * items;
+    const recordsPromise = this.gateway.find().skip(skip).limit(items).exec();
+
+    const countPromise = this.gateway.countDocuments().exec();
+
+    const [records, count] = await Promise.all([recordsPromise, countPromise]);
+
+    const metadata = {
+      totalPages: Math.ceil(count / items),
+      currentPage: page,
+      count,
+    }
+    return { gateways: records, metadata };
   }
 
   findOne(id: number) {
