@@ -10,7 +10,7 @@ export class Gateway {
     serial: string;
 
     @Prop()
-    name: number;
+    name: string;
 
     @Prop()
     address: string;
