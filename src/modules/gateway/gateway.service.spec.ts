@@ -89,4 +89,36 @@ describe('GatewayService', () => {
       expect(model.findOne().exec).toHaveBeenCalled();
     });
   });
+
+  describe('remove', () => {
+    it('should remove a gateway if it exists', async () => {
+      const serial = 'existing-serial';
+      const mockGatewayRecord = {
+        serial,
+        deleteOne: jest.fn().mockResolvedValue(true)
+      };
+
+      jest.spyOn(model, 'findOne').mockReturnValue({
+        exec: jest.fn().mockResolvedValue(mockGatewayRecord),
+      } as any);
+
+      await service.remove(serial);
+
+      expect(model.findOne).toHaveBeenCalledWith({ serial });
+      expect(model.findOne().exec).toHaveBeenCalled();
+      expect(mockGatewayRecord.deleteOne).toHaveBeenCalled();
+    });
+
+    it('should throw a NotFoundException if the gateway does not exist', async () => {
+      const serial = 'non-existent-serial';
+
+      jest.spyOn(model, 'findOne').mockReturnValue({
+        exec: jest.fn().mockResolvedValue(null),
+      } as any);
+
+      await expect(service.remove(serial)).rejects.toThrow(NotFoundException);
+      expect(model.findOne).toHaveBeenCalledWith({ serial });
+      expect(model.findOne().exec).toHaveBeenCalled();
+    });
+  });
 });
