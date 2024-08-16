@@ -1,1 +1,19 @@
-export class Gateway {}
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { HydratedDocument } from 'mongoose';
+import { Types } from 'mongoose';
+
+export type GatewayDocument = HydratedDocument<Gateway>;
+
+@Schema()
+export class Gateway {
+    @Prop({ type: Types.ObjectId })
+    serial: string;
+
+    @Prop()
+    name: number;
+
+    @Prop()
+    address: string;
+}
+
+export const GatewaySchema = SchemaFactory.createForClass(Gateway);
