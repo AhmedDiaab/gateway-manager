@@ -23,7 +23,8 @@
       "@modules/*": ["./src/modules/*"],
       "@handlers/*": ["./src/handlers/*"],
       "@exceptions/*": ["./src/exceptions/*"],
-      "@interceptors/*": ["./src/interceptors/*"]
+      "@interceptors/*": ["./src/interceptors/*"],
+      "@filters/*": ["./src/filters/*"]
     }
   }
 }

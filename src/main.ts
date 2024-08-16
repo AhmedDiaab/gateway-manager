@@ -7,6 +7,8 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { initializeSwagger } from '@utils/initialize-swagger.util';
 import { handleValidationErrors } from '@handlers/validation-error.handler';
 import { ResponseInterceptor } from '@interceptors/response.interceptor';
+import { HttpExceptionFilter } from '@filters/http.filter';
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -29,6 +31,9 @@ async function bootstrap() {
 
   // unify response body 
   app.useGlobalInterceptors(new ResponseInterceptor());
+
+  // catch all exceptions
+  app.useGlobalFilters(new HttpExceptionFilter());
 
   // initialize swagger
   initializeSwagger(app, APP_NAME);
