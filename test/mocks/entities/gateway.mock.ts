@@ -1,10 +1,14 @@
 import { mockPaginatableFilter } from "@mocks/shared/filter.mock";
 
-export const mockGateway = {
-    _id: 'mockId',
+export const mockGatewayPayload = {
     name: 'Mock Gateway',
     serial: "SampleSerial1",
     address: "192.168.1.1",
+}
+
+export const mockGateway = {
+    _id: 'mockId',
+    ...mockGatewayPayload
 };
 
 export const mockGateways = [mockGateway];
