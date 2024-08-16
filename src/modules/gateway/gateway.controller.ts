@@ -29,8 +29,10 @@ export class GatewayController {
   }
 
   @Get(':id')
+  @ApiOperation({ summary: 'Get gateway details by its serial number' })
+  @ApiOkResponse({ type: GatewayResponse })
   findOne(@Param('id') id: string) {
-    return this.gatewayService.findOne(+id);
+    return this.gatewayService.findOne(id);
   }
 
   @Patch(':id')

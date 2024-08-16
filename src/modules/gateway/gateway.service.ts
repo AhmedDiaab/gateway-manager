@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateGatewayDto } from './dto/create-gateway.dto';
 import { UpdateGatewayDto } from './dto/update-gateway.dto';
 import { InjectModel } from '@nestjs/mongoose';
@@ -31,8 +31,10 @@ export class GatewayService {
     return { gateways: records, metadata };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} gateway`;
+  async findOne(serial: string) {
+    const record = await this.gateway.findOne({ serial }).exec();
+    if(!record) throw new NotFoundException();
+    return record;
   }
 
   update(id: number, updateGatewayDto: UpdateGatewayDto) {
