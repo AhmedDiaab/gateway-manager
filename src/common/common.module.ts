@@ -1,5 +1,6 @@
 import { Module } from '@nestjs/common';
-import {ConfigModule} from '@nestjs/config';
+import {ConfigModule, ConfigService} from '@nestjs/config';
+import { MongooseModule } from '@nestjs/mongoose';
 import { join } from 'path';
 import { cwd } from 'process';
 import { ConfigurationNamespaces } from 'src/config';
@@ -10,6 +11,10 @@ import { ConfigurationNamespaces } from 'src/config';
             isGlobal: true,
             load: [...ConfigurationNamespaces],
             envFilePath: join(cwd(), '.env')
+        }),
+        MongooseModule.forRootAsync({
+            inject: [ConfigService],
+            useFactory: (config: ConfigService) => config.get('database')
         })
     ]
 })
