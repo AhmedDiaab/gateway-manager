@@ -3,8 +3,10 @@ import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { ServerConfiguration } from './config/server.config';
 import { useContainer } from 'class-validator';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { initializeSwagger } from '@utils/initialize-swagger.util';
+import { handleValidationErrors } from '@handlers/validation-error.handler';
+import { ResponseInterceptor } from '@interceptors/response.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -17,6 +19,16 @@ async function bootstrap() {
 
   // global prefix
   app.setGlobalPrefix('/api/v1');
+
+  // enable validation
+  app.useGlobalPipes(new ValidationPipe({
+    transform: true,
+    errorHttpStatusCode: 422,
+    exceptionFactory: handleValidationErrors
+  }));
+
+  // unify response body 
+  app.useGlobalInterceptors(new ResponseInterceptor());
 
   // initialize swagger
   initializeSwagger(app, APP_NAME);
