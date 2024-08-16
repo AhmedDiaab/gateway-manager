@@ -29,13 +29,14 @@ Each peripheral device includes:
 - API Documentation: Swagger
 - Validation: `class-validator` + `class-transformer`
 - Package manager: pnpm
+- Unit Testing: Jest
 
 
 # Todo
 - [x] Add and validate configuration
 - [x] Add swagger 
 - [x] Add database integration
-- [ ] Gateway module
+- [x] Gateway module
 - [ ] Peripheral device module
 - [ ] Dockerize application
 
