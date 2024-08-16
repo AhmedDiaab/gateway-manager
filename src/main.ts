@@ -15,6 +15,9 @@ async function bootstrap() {
   // set container
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
 
+  // global prefix
+  app.setGlobalPrefix('/api/v1');
+
   // initialize swagger
   initializeSwagger(app, APP_NAME);
 
