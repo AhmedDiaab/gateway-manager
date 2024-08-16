@@ -24,7 +24,8 @@
       "@handlers/*": ["./src/handlers/*"],
       "@exceptions/*": ["./src/exceptions/*"],
       "@interceptors/*": ["./src/interceptors/*"],
-      "@filters/*": ["./src/filters/*"]
+      "@filters/*": ["./src/filters/*"],
+      "@mocks/*": ["./test/mocks/*"]
     }
   }
 }
