@@ -25,8 +25,7 @@ export class ServerConfiguration extends BaseConfig {
     APP_NAME: string;
 
     @IsString()
-    @IsUrl()
-    URL: string;
+    APP_URL: string;
 }
 
 
@@ -36,7 +35,7 @@ export default registerAs('server', () => {
         NODE_ENV: env.NODE_ENV,
         PORT: +env.PORT,
         APP_NAME: env.APP_NAME,
-        URL: env.URL
+        APP_URL: env.APP_URL
     }
 
     return ValidateConfig(ServerConfiguration, config);
