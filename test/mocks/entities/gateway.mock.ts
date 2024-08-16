@@ -27,4 +27,5 @@ export const mockGatewayModel = {
     exec: jest.fn().mockResolvedValue([mockGateway]),
     countDocuments: jest.fn().mockReturnThis(),
     execCount: jest.fn().mockResolvedValue(1),
+    findOne: jest.fn().mockReturnThis(),
 };

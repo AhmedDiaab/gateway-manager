@@ -7,6 +7,7 @@ import { getModelToken } from '@nestjs/mongoose';
 import { mockGateway, mockGatewayModel, mockGateways, mockPaginatedGateways } from '@mocks/entities/gateway.mock';
 import { Paginatable } from '@lib/classes/paginatable.base';
 import { mockPaginatableFilter } from '@mocks/shared/filter.mock';
+import { NotFoundException } from '@nestjs/common';
 
 describe('GatewayService', () => {
   let service: GatewayService;
@@ -57,6 +58,35 @@ describe('GatewayService', () => {
 
       expect(model.find().skip(skip).limit(mockPaginatableFilter.items).exec).toHaveBeenCalled();
       expect(model.countDocuments().exec).toHaveBeenCalled();
+    });
+  });
+
+  describe('findOne', () => {
+    it('should return a gateway if it exists', async () => {
+      const serial = 'some-serial';
+      const mockGatewayRecord = { ...mockGateway, serial };
+
+      jest.spyOn(model, 'findOne').mockReturnValue({
+        exec: jest.fn().mockResolvedValue(mockGatewayRecord),
+      } as any);
+
+      const result = await service.findOne(serial);
+
+      expect(result).toEqual(mockGatewayRecord);
+      expect(model.findOne).toHaveBeenCalledWith({ serial });
+      expect(model.findOne().exec).toHaveBeenCalled();
+    });
+
+    it('should throw a NotFoundException if the gateway does not exist', async () => {
+      const serial = 'non-existent-serial';
+
+      jest.spyOn(model, 'findOne').mockReturnValue({
+        exec: jest.fn().mockResolvedValue(null),
+      } as any);
+
+      await expect(service.findOne(serial)).rejects.toThrow(NotFoundException);
+      expect(model.findOne).toHaveBeenCalledWith({ serial });
+      expect(model.findOne().exec).toHaveBeenCalled();
     });
   });
 });
