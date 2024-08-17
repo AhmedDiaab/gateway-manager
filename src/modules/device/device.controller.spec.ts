@@ -6,6 +6,7 @@ import { GatewayProvider } from '@mocks/providers/gateway.mock';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { DeviceResponse } from './dto/device.response';
 import { mockDevice, mockDevicePayload } from '@mocks/entities/device.mock';
+import { UpdateDeviceDto } from './dto/update-device.dto';
 
 describe('DeviceController', () => {
   let controller: DeviceController;
@@ -52,6 +53,31 @@ describe('DeviceController', () => {
 
       expect(service.findAll).toHaveBeenCalledWith(gateway);
       expect(result).toEqual(expectedResult);
+    });
+  });
+
+  describe('toggleStatus', () => {
+    it('should call DeviceService.update and return the result', async () => {
+      const gateway = 'someSerial';
+      const id = '1';
+      const payload: UpdateDeviceDto = { status: 'offline' };
+
+      const result = await controller.toggleStatus(gateway, id, payload);
+
+      expect(service.update).toHaveBeenCalledWith(gateway, id, payload);
+      expect(result).toBeUndefined();  // Since the controller method doesn't return a value
+    });
+  });
+
+  describe('remove', () => {
+    it('should call DeviceService.remove and return the result', async () => {
+      const gateway = 'someSerial';
+      const id = '1';
+
+      const result = await controller.remove(gateway, id);
+
+      expect(service.remove).toHaveBeenCalledWith(gateway, id);
+      expect(result).toBeUndefined();  // Since the controller method doesn't return a value
     });
   });
 });
