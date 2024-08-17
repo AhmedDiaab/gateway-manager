@@ -49,3 +49,8 @@ To run the application in development mode
 To run the application in production mode
 
 `pnpm run start`
+
+
+# Running with docker
+You can run this application with docker using this command
+`docker-compose up -d --build`
