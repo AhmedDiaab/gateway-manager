@@ -11,7 +11,7 @@ export class ValidateGatewayInterceptor implements NestInterceptor {
         const request = context.switchToHttp().getRequest();
 
         // extract gateway from route parameter
-        const serial = request.params.gateway;
+        const serial = request.params.serial;
 
         // check if gateway exists then if not throw exception
         const count = await this.gateway.countDocuments({ serial });
