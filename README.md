@@ -37,7 +37,7 @@ Each peripheral device includes:
 - [x] Add swagger 
 - [x] Add database integration
 - [x] Gateway module
-- [ ] Peripheral device module
+- [x] Peripheral device module
 - [ ] Dockerize application
 
 # Running the application
