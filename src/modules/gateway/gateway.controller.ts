@@ -1,7 +1,7 @@
 import { Controller, Get, Post, Body, Param, Delete, HttpCode, HttpStatus, Query } from '@nestjs/common';
 import { GatewayService } from './gateway.service';
 import { CreateGatewayDto } from './dto/create-gateway.dto';
-import { ApiBadRequestResponse, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { ApiBadRequestResponse, ApiCreatedResponse, ApiOkResponse, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 import { GatewayResponse } from './dto/gateway.response';
 import { Paginatable } from '@lib/classes/paginatable.base';
 
@@ -30,6 +30,7 @@ export class GatewayController {
   @Get(':serial')
   @ApiOperation({ summary: 'Get gateway details by its serial number' })
   @ApiOkResponse({ type: GatewayResponse })
+  @ApiParam({ name: 'serial', description: 'Gateway Serial' })
   findOne(@Param('serial') serial: string) {
     return this.gatewayService.findOne(serial);
   }
