@@ -17,6 +17,9 @@ export class ValidateGatewayInterceptor implements NestInterceptor {
         // extract gateway from route parameter
         const serial = request.params.serial;
 
+        // extract method
+        const method = request.method;
+
         // check if gateway exists then if not throw exception
         const countPromise = this.gateway.countDocuments({ serial });
         const devicesPromise = this.device.countDocuments({ gateway: serial });
@@ -25,7 +28,7 @@ export class ValidateGatewayInterceptor implements NestInterceptor {
 
         if (count === 0) throw new NotFoundException('Gateway Not exist');
 
-        if(devices === 10) throw new BadRequestException('Gateway maximum attached devices is 10');
+        if (devices === 10 && method === 'POST') throw new BadRequestException('Gateway maximum attached devices is 10');
 
         return next.handle();
     }
