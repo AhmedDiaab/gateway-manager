@@ -16,6 +16,16 @@
     "noImplicitAny": false,
     "strictBindCallApply": false,
     "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false
+    "noFallthroughCasesInSwitch": false,
+    "paths": {
+      "@lib/*": ["./lib/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@modules/*": ["./src/modules/*"],
+      "@handlers/*": ["./src/handlers/*"],
+      "@exceptions/*": ["./src/exceptions/*"],
+      "@interceptors/*": ["./src/interceptors/*"],
+      "@filters/*": ["./src/filters/*"],
+      "@mocks/*": ["./test/mocks/*"]
+    }
   }
 }
