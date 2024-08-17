@@ -69,4 +69,23 @@ describe('DeviceService', () => {
         .toThrow(NotFoundException);
     });
   });
+
+  describe('remove', () => {
+    it('should remove the device', async () => {
+      await service.remove('someGatewayId', 'someDeviceId');
+
+      expect(model.findOne).toHaveBeenCalledWith({ _id: 'someDeviceId', gateway: 'someGatewayId' });
+      expect(mockDevice.deleteOne).toHaveBeenCalled();
+    });
+
+    it('should throw NotFoundException if device not found', async () => {
+      jest.spyOn(model, 'findOne').mockReturnValueOnce({
+        exec: jest.fn().mockResolvedValue(null),
+      } as any);
+
+      await expect(service.remove('someGatewayId', 'invalidDeviceId'))
+        .rejects
+        .toThrow(NotFoundException);
+    });
+  });
 });
