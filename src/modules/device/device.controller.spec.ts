@@ -37,4 +37,21 @@ describe('DeviceController', () => {
       expect(result).toEqual(mockDevice);
     });
   });
+
+  describe('findAll', () => {
+    it('should call DeviceService.findAll and return the result', async () => {
+      const gateway = 'someSerial';
+      const expectedResult = [
+        { _id: '1', gateway, vendor: 'Device Vendor', status: 'online' },
+        { _id: '2', gateway, vendor: 'Another Vendor', status: 'offline' },
+      ];
+
+      jest.spyOn(service, 'findAll').mockResolvedValue(expectedResult as any);
+
+      const result = await controller.findAll(gateway);
+
+      expect(service.findAll).toHaveBeenCalledWith(gateway);
+      expect(result).toEqual(expectedResult);
+    });
+  });
 });
