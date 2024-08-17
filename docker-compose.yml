@@ -21,6 +21,15 @@ services:
     networks:
       - app-network
 
+  react:
+    build:
+      dockerfile: Dockerfile.portal
+    container_name: react-app
+    ports:
+      - "3000:3000"  # Map port 80 in the container to port 3000 on your host
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
