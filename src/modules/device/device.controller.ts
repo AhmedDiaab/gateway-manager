@@ -1,30 +1,24 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseInterceptors } from '@nestjs/common';
 import { DeviceService } from './device.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
-import { UpdateDeviceDto } from './dto/update-device.dto';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
+import { ValidateGatewayInterceptor } from '@modules/gateway/interceptors/validate-gateway.interceptor';
 
-@Controller('device')
+@Controller('gateways/:serial/devices')
+@ApiTags('Devices')
+@ApiParam({ name: 'serial', description: 'Gateway Serial' })
+@UseInterceptors(ValidateGatewayInterceptor)
 export class DeviceController {
-  constructor(private readonly deviceService: DeviceService) {}
+  constructor(private readonly deviceService: DeviceService) { }
 
   @Post()
-  create(@Body() createDeviceDto: CreateDeviceDto) {
-    return this.deviceService.create(createDeviceDto);
+  create(@Param('serial') gateway: string, @Body() payload: CreateDeviceDto) {
+    return this.deviceService.create(gateway, payload);
   }
 
   @Get()
   findAll() {
     return this.deviceService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.deviceService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDeviceDto: UpdateDeviceDto) {
-    return this.deviceService.update(+id, updateDeviceDto);
   }
 
   @Delete(':id')
