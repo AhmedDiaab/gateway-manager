@@ -54,3 +54,9 @@ To run the application in production mode
 # Running with docker
 You can run this application with docker using this command
 `docker-compose up -d --build`
+
+
+# Accessing application
+- [Swagger](http://localhost:3030/api)
+- [API](http://localhost:3030)
+- [Portal](http://localhost:3000)
