@@ -6,19 +6,19 @@ enum Status {
     Offline = 'offline'
 }
 export class CreateDeviceDto {
-    @ApiProperty()
+    @ApiProperty({ example: 1 })
     @IsNumber()
     @Min(1)
     uid: number;
 
 
-    @ApiProperty()
+    @ApiProperty({ example: 'Mouse' })
     @IsString()
     @MinLength(1)
     @MaxLength(28)
     vendor: string;
 
-    @ApiProperty({ enum: Status })
+    @ApiProperty({ enum: Status, example: 'online' })
     @IsEnum(Status)
     status: 'online' | 'offline';
 }
