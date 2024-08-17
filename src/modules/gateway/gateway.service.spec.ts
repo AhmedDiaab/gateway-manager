@@ -8,6 +8,7 @@ import { mockGateway, mockGatewayModel, mockGateways, mockPaginatedGateways } fr
 import { Paginatable } from '@lib/classes/paginatable.base';
 import { mockPaginatableFilter } from '@mocks/shared/filter.mock';
 import { NotFoundException } from '@nestjs/common';
+import { DeviceProvider } from '@mocks/providers/device.mock';
 
 describe('GatewayService', () => {
   let service: GatewayService;
@@ -15,7 +16,7 @@ describe('GatewayService', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [GatewayService, GatewayProvider],
+      providers: [GatewayService, GatewayProvider, DeviceProvider],
     }).compile();
 
     service = module.get<GatewayService>(GatewayService);

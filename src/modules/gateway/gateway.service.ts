@@ -5,10 +5,14 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Gateway } from './entities/gateway.entity';
 import { Model } from 'mongoose';
 import { Paginatable } from '@lib/classes/paginatable.base';
+import { Device } from '@modules/device/entities/device.entity';
 
 @Injectable()
 export class GatewayService {
-  constructor(@InjectModel(Gateway.name) private gateway: Model<Gateway>) { }
+  constructor(
+    @InjectModel(Gateway.name) private gateway: Model<Gateway>,
+    @InjectModel(Device.name) private device: Model<Device>,
+  ) { }
 
   create(payload: CreateGatewayDto) {
     return this.gateway.create(payload)
@@ -33,13 +37,14 @@ export class GatewayService {
 
   async findOne(serial: string) {
     const record = await this.gateway.findOne({ serial }).exec();
-    if(!record) throw new NotFoundException();
+    if (!record) throw new NotFoundException();
     return record;
   }
 
   async remove(serial: string) {
     const record = await this.gateway.findOne({ serial }).exec();
-    if(!record) throw new NotFoundException();
+    if (!record) throw new NotFoundException();
+    await this.device.deleteMany({ gateway: record.serial }).exec();
     await record.deleteOne();
   }
 }

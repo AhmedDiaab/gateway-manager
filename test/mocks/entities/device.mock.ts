@@ -21,4 +21,7 @@ export const mockDeviceModel = {
         exec: jest.fn().mockResolvedValue(mockDevice),
     }),
     countDocuments: jest.fn(),
+    deleteMany: jest.fn().mockReturnValue({
+        exec: jest.fn().mockResolvedValue(mockDevice),
+    })
 };
