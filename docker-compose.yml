@@ -1,0 +1,29 @@
+services:
+  nestjs:
+    build: .
+    container_name: app
+    ports:
+      - "${PORT}:3030"
+    depends_on:
+      - mongodb
+    environment:
+      - MONGODB_URI=${DB_URI}
+    networks:
+      - app-network
+
+  mongodb:
+    image: mongo:latest
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mongodb-data:
