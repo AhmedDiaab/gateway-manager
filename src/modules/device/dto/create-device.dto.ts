@@ -1,5 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsEnum, IsNumber, IsString, MaxLength, Min, MinLength } from "class-validator";
+import { StatusType } from "../types/status.type";
 
 enum Status {
     Online = 'online',
@@ -20,5 +21,5 @@ export class CreateDeviceDto {
 
     @ApiProperty({ enum: Status, example: 'online' })
     @IsEnum(Status)
-    status: 'online' | 'offline';
+    status: StatusType;
 }

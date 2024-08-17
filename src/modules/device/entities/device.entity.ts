@@ -2,6 +2,7 @@ import { BaseEntity } from "@lib/classes/entity.base";
 import { Gateway } from "@modules/gateway/entities/gateway.entity";
 import { ModelDefinition, Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument } from 'mongoose';
+import { StatusType } from "../types/status.type";
 
 export type DeviceDocument = HydratedDocument<Device>;
 @Schema()
@@ -13,7 +14,7 @@ export class Device extends BaseEntity {
     vendor: string;
 
     @Prop()
-    status: 'online' | 'offline';
+    status: StatusType;
 
     @Prop({ ref: Gateway.name })
     gateway: string;
