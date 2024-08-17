@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, Delete, UseInterceptors } from '@ne
 import { DeviceService } from './device.service';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { ApiParam, ApiTags } from '@nestjs/swagger';
-import { ValidateGatewayInterceptor } from '@modules/gateway/interceptors/validate-gateway.interceptor';
+import { ValidateGatewayInterceptor } from '@modules/device/interceptors/validate-gateway.interceptor';
 
 @Controller('gateways/:serial/devices')
 @ApiTags('Devices')

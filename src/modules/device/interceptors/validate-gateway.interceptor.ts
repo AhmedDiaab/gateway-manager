@@ -1,7 +1,7 @@
 import { Injectable, NestInterceptor, ExecutionContext, CallHandler, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { Gateway } from '../entities/gateway.entity';
+import { Gateway } from '../../gateway/entities/gateway.entity';
 
 @Injectable()
 export class ValidateGatewayInterceptor implements NestInterceptor {
