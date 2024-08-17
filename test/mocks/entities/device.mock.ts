@@ -6,7 +6,9 @@ export const mockDevicePayload = {
 
 export const mockDevice = {
     _id: "mockId",
-    ...mockDevicePayload
+    ...mockDevicePayload,
+    save: jest.fn(),
+    deleteOne: jest.fn(),
 };
 
 export const mockDevices = [mockDevice];

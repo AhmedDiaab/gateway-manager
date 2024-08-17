@@ -6,6 +6,9 @@ import { getModelToken } from '@nestjs/mongoose';
 import { CreateDeviceDto } from './dto/create-device.dto';
 import { mockDevice, mockDevicePayload, mockDevices } from '@mocks/entities/device.mock';
 import { DeviceProvider } from '@mocks/providers/device.mock';
+import { UpdateDeviceDto } from './dto/update-device.dto';
+import { StatusType } from './types/status.type';
+import { NotFoundException } from '@nestjs/common';
 
 describe('DeviceService', () => {
   let service: DeviceService;
@@ -46,4 +49,24 @@ describe('DeviceService', () => {
     });
   });
 
+  describe('update', () => {
+    it('should update the device status', async () => {
+      const payload: UpdateDeviceDto = { status: 'inactive' as StatusType };
+      await service.update('someGatewayId', 'someDeviceId', payload);
+
+      expect(model.findOne).toHaveBeenCalledWith({ _id: 'someDeviceId', gateway: 'someGatewayId' });
+      expect(mockDevice.save).toHaveBeenCalled();
+      expect(mockDevice.status).toBe(payload.status);
+    });
+
+    it('should throw NotFoundException if device not found', async () => {
+      jest.spyOn(model, 'findOne').mockReturnValueOnce({
+        exec: jest.fn().mockResolvedValue(null),
+      } as any);
+
+      await expect(service.update('someGatewayId', 'invalidDeviceId', { status: 'inactive' as StatusType }))
+        .rejects
+        .toThrow(NotFoundException);
+    });
+  });
 });
