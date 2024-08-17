@@ -20,4 +20,5 @@ export const mockDeviceModel = {
     findOne: jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(mockDevice),
     }),
+    countDocuments: jest.fn(),
 };
