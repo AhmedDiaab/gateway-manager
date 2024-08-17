@@ -14,9 +14,7 @@ export const mockDevices = [mockDevice];
 
 export const mockDeviceModel = {
     create: jest.fn().mockResolvedValue(mockDevice),
-    find: jest.fn().mockReturnValue({
-        exec: jest.fn().mockResolvedValue([mockDevice]),
-    }),
+    find: jest.fn().mockResolvedValue(mockDevices),
     findOne: jest.fn().mockReturnValue({
         exec: jest.fn().mockResolvedValue(mockDevice),
     }),

@@ -4,7 +4,7 @@ import { Model } from 'mongoose';
 import { Device } from './entities/device.entity';
 import { getModelToken } from '@nestjs/mongoose';
 import { CreateDeviceDto } from './dto/create-device.dto';
-import { mockDevice, mockDevicePayload } from '@mocks/entities/device.mock';
+import { mockDevice, mockDevicePayload, mockDevices } from '@mocks/entities/device.mock';
 import { DeviceProvider } from '@mocks/providers/device.mock';
 
 describe('DeviceService', () => {
@@ -37,5 +37,13 @@ describe('DeviceService', () => {
     });
   });
 
+  describe('findAll', () => {
+    it('should return all devices for a gateway', async () => {
+      const result = await service.findAll('someGatewayId');
+
+      expect(model.find).toHaveBeenCalledWith({ gateway: 'someGatewayId' });
+      expect(result).toEqual(mockDevices);
+    });
+  });
 
 });
