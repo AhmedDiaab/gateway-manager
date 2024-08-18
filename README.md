@@ -60,3 +60,6 @@ You can run this application with docker using this command
 - [Swagger](http://localhost:3030/api)
 - [API](http://localhost:3030)
 - [Portal](http://localhost:3000)
+
+# Resources
+- [ERD](https://drive.google.com/file/d/1aFvjzsGKHmgSiZQ5XL0n8hd7DE3nv4Zo/view?usp=sharing)
